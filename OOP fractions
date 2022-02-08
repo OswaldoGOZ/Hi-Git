@@ -1,0 +1,115 @@
+class Fraccion:
+
+    def __init__(self, num, den):        #funcion constructor, su objetivo es asignar valores de inicio a las variables de clase.
+        if isinstance (num,int):         # se ejecuta cada vez que creamos un nuevo onbjeto de la clase
+            self.num = num              #isintance: verifica o valida que los datos ingresado al
+            self.den = den              #crear un objeto cumplan condiciones, en este caso si es int, y den, debe ser diferente de cero     
+        else:
+            self.num = 1
+            self.den = 1
+        if isinstance (den,int) and (den != 0): #si den es diferente de cero, agarra el num y el den y sigue
+            self.den = den
+            self.num = num
+            
+        else: 
+            print ("INDETERMINACIÓN") # si el Den es igual a cero muestra el mensaje de indeterminación
+            self.num = num
+            self.den = den 
+         
+    def imprime(self):                  # función (método) que al llamarse, imprime los objetos de esta clase
+        print ("{",self.num, "/",self.den,"}")
+
+    def multiplica(self, Otro_objeto):        # funcion que al llmarse multiplica un objeto por otro (la LLamé "Otro_objeto pero puede tener cualquier nombre aquí")
+        newn = self.num * Otro_objeto.num     #  (self, por el otro objeto declarado///Para el caso: a.multiplica(b), self es "a" y Otro_objeto es "b", entonces en numerador de "a" por numerador de "b")
+        newd = self.den * Otro_objeto.den         #denominador de a por denominador de b
+        r = Fraccion (newn,newd)        # crea un nuevo objeto, q es la fracción resultado
+        return r                        # retorna r, OJO aquí se puede colocar cualquier letra que no sea "r" e igual funciona, 
+                                        #porque es una variable que solo es local para esta función, retornará igual ese valor a la variable que la llamó, así sea otra
+
+    def sumatoria(self,Otro_objeto):
+        newnum = (self.num * Otro_objeto.den) + (self.den * Otro_objeto.num)
+        newden = (self.den * Otro_objeto.den)
+        s = Fraccion (newnum,newden)
+        return s
+
+    def __str__(self):                 #método __str__: devuelve (return) un llamado de print al objeto de una clase, por ejemplo "print(a)"
+        return "[" + str(self.num) + "/" + str(self.den) + "]"   #es una alternativa a realizar la función método imprime creada "imprime(self) que esta más arriba"
+    
+    #def __del__ (self):                    DESTRUCTOR DE OBJETOS, SI SE NECESITA SE USA ESTE MÉTODO
+    #    print ("destruyendo el objeto")   
+
+    # este método que sigue es para sobrecarga de operadores (la explicación está a lo último)
+    #a continuación se usa como alternativa a la función "def multiplica", permite llamar a funcion __mul__ con r=a*b,
+    #en lugar de llamar a funcion multiplica con r=a.multiplica(b)
+    def __mul__(self,Otro_objeto):                # notar que es casi lo mismo que el metodo "multiplica" creado, la diferencia es la manera en que se llama a ella (con el operador *: r =a*b)
+        newn = self.num * Otro_objeto.num         # numerador de a por numerador de b
+        newd = self.den * Otro_objeto.den         #denominador de a por denominador de b
+        r = Fraccion (newn,newd)        # crea un nuevo objeto, q es la fracción resultado
+        return r 
+    
+    # ahora método de comparación, sobrecargando el operador " == "
+    def __eq__ (self, otro):
+        if self.num == otro.num and self.den == otro.den:      #compara numerador y denominador de los objetos, parametros ingresados (self, otro)
+            y = True                                            # verdadero, retorna TRUE
+        else:
+            y = False                                          #si es falso, retorna FALSE
+        return y
+
+# descrito los métodos de la clase "fraccion" , aquí emíeza el programa:
+
+a = Fraccion(int(input ("inserte numerador: ")),int(input ("inserte denominador: "))) # se crea el objeto a "integrando"(convirtiendo a enteros) las entradas. Esto llama al método def __init__ que arriba crea el pbjeto de la clase Fracción
+a.imprime()                                                                             #llama al método "def imprime" de arriba
+
+# este parentesis es para mostrar el método __str__#
+print(a)
+#Es innecesario pero lo ubico aquí para muestra (permite imprimir un objeto) llamando print(objeto)#
+
+b = Fraccion(int(input ("inserte numerador: ")),int(input ("inserte denominador: ")))
+b.imprime()
+
+r = a.multiplica(b)  
+
+r.imprime() 
+
+s = a.sumatoria(b)
+s.imprime()
+
+
+#NOTA: se pueden sobrecargar los operadores, algo asi como convertilos en llamadores de una funcion o metodo:
+# __mul__ sería: *
+#__add__ sería: +, 
+# #resta (-) sería __sub__ 
+# #igualdad ==, sería__eq__ 
+# #división (/) sería __div__ y así
+
+# En ese caso pudieramos utilizar: r = a*b   en lugar de r = a.multipica(b), como se muestra ahora:
+
+r =a*b   #esto llamará a la función def __mul__ en lugar de la funcion def multiplica, pero hará lo mismo
+print(r) #luego imprime el resultado "r" usando el método __str__
+
+z= a*b    #notar que aqui lo llamamos "z" en lugar de "r" e igual funciona, es decir las funciones __mul__ y multiplica
+print (z) #retornan el valor, a la variable de acá, como sea que se llame
+
+# se pudiese sobrecargar el operador de suma declarando en los métodos de clase, de la siguiente manera:
+
+    #def __add__(self, X)
+    #newnum = (self.num * Otro_objeto.den) + (self.den * Otro_objeto.num)
+    #newden = (self.den * Otro_objeto.den)
+    #w = Fraccion (newnum,newden)
+    #return w
+
+# entonces se llamaría a ese método con z = a + b, en lugar de z = a.sumatoria(b)
+
+#________________________________________________________________________________________________________________________
+
+# aqui se muestra la comparación entre a y b, sobrecargando el operador " == " que en este caso lleva a la funcion "def __eq__"
+# m = a == b  ERROR, notar que estoy creando un objeto m, cuand la funcion retorna un booleano TRUE o FALSE
+# print (m)     Aunque funcionaba, imprimia algo loco, 00 y 01, falso y true en string, con las llaves y corchetes
+
+#Ahora si, la manera correcta para mostrar el resultado del la comparación
+
+print (a == b) 
+
+# en la comparación sería preferible dividir self.num/self.dem == otro.num/otro.dem,
+# si los resultados son iguales, las fracciones son iguales o equivalentes, por ejemplo: 2/4 y 1/2
+#con el primer metodo daria que son diferentes, con es te otro metodo te dice que son iguales, so, este es preferible
