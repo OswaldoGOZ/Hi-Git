@@ -1,0 +1,70 @@
+
+# 1- Escribir un programa que guarde en una variable el diccionario {'Euro':'€', 'Dollar':'$', 'Yen':'¥'},
+#  pregunte al usuario por una divisa y muestre su símbolo o un mensaje de aviso si la divisa no está en el diccionario.
+
+divisas =  {'Euro':'€', 'Dollar':'$', 'Yen':'¥'}
+moneda = input("ingrese una divisa\n")
+if moneda.title() in divisas:
+    print ("el símbolo es {}".format(divisas[moneda.title()]))
+else:
+    print ("La moneda no está")
+
+#OTRA MANERA
+# monedas = {'Euro':'€', 'Dollar':'$', 'Yen':'¥'}
+# moneda = input("Introduce una divisa: ")
+# print(monedas.get(moneda.title(), "La divisa no está."))   # acá el get extrae el value del key indicado, pero si no lo encuentra arroja "la divisa no está"
+
+# 2- Escribir un programa que pregunte al usuario su nombre, edad, dirección y teléfono y lo guarde en un diccionario.
+#  Después debe mostrar por pantalla el mensaje <nombre> tiene <edad> años, vive en <dirección> y 
+# su número de teléfono es <teléfono>.
+
+Ficha = {'nombre':'','edad':'','dirección':'','teléfono':''}
+
+for key in Ficha:
+    Ficha[key]=input("introduzca su " + str(key) + ": ")
+print(Ficha['nombre'], "tiene ",Ficha['edad'], "vive en ",Ficha['dirección'], "y su teléfono es ",Ficha['teléfono'])
+
+# 3- Escribir un programa que guarde en un diccionario los precios de las frutas de la tabla, pregunte al usuario 
+# por una fruta, un número de kilos y muestre por pantalla el precio de ese número de kilos de fruta. 
+# si la fruta no está en el diccionario debe mostrar un mensaje informando de ello.
+# platano: 1.35, manzana: 0.8, pera: 0.85, naranja: 0.70
+
+prices = {'platano': 1.35, 'manzana': 0.8, 'pera': 0.85, 'naranja': 0.7}
+fruta = input("¿Qué fruta desea?\n")
+kilos = float(input("¿Cuántos kilos?\n"))
+
+if fruta in prices:
+    print ("Producto:{0:<10} Kg:{1:<10}Total a pagar:{2:<1} euros".format(fruta,kilos,round((kilos*prices[fruta]),2)))
+else:
+    print ("lo siento, la fruta no está disponible CARAJO")
+
+# 4- Escribir un programa que pregunte una fecha en formato dd/mm/aaaa y muestre por pantalla la misma fecha 
+# en formato dd de <mes> de aaaa donde <mes> es el nombre del mes.
+
+fecha = input("escriba la fecha en formato dd/mm/aaaa: ")
+
+inicio = fecha.find("/")
+fin = fecha.rfind("/")
+
+dia = fecha[:inicio]
+mes = fecha[inicio+1:fin]
+año = fecha[fin+1::]
+meses = {1:"enero",2:"febrero",3:"marzo",4:"abril",5:"mayo",6:"junio",7:"julio",8:"agosto",9:"septiembre",10:"octubre",11:"noviembre",12:"diciembre"}
+print ("{0} de {1} de {2}".format(dia,meses[int(mes)],año))
+
+#otra manera, convirtiendo la fecha dd/mm/aaaa en lista
+listado = fecha.split("/")
+print (listado)
+print ("{0} de {1} de {2}".format(listado[0],meses[int(listado[1])],listado[2]))
+
+# 5- Escribir un programa que almacene el diccionario con los créditos de las asignaturas de un curso 
+# {'Matemáticas': 6, 'Física': 4, 'Química': 5} y después muestre por pantalla los créditos de cada asignatura
+#  en el formato <asignatura> tiene <créditos> créditos, donde <asignatura> es cada una de las asignaturas del curso,
+#  y <créditos> son sus créditos. Al final debe mostrar también el número total de créditos del curso.
+
+credits = {'Matemáticas': 6, 'Física': 4, 'Química': 5}
+total = 0
+for k in credits:
+    print("La asignatura {} tiene {} creditos".format(k,credits[k]))
+    total += credits[k]
+print("El total de créditos del curso es ",total)
